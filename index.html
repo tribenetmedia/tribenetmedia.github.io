@@ -109,7 +109,7 @@
                 apiResponseElement.textContent = JSON.stringify(data, null, 2);
 
                 // Check if 'campaignName' contains 'Test'
-                if (data.campaignName.includes('Test')) {
+                if (data.records.campaignName.includes('Test')) {
                     // Redirect to the specified URL
                     window.location.href = 'https://tribenetmedia.com/survey';
                 } else {
