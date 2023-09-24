@@ -71,19 +71,11 @@
 
             // Request 'campaignName' from the API
             var apiUrl = `https://ads-manager-api.skro.eu/v1/report/clicks?from=${fromTime}&to=${toTime}&timezone=${timeZone}&workspace=${workspace}&clickid=${clickId}`;
+            
+            // Define API request headers (replace with your actual authorization token)
             var headers = {
-                'Authorization': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMyNDYsImFpZCI6MzIwNCwiZGlkIjoiIiwicmlkIjoxLCJhcHAiOjIsImlhdCI6MTY5NTU4MDg5NiwiZXhwIjoxNzI3MjAzMzg2fQ.hdr6l6PJ-dQYhDq6J6kD-qzGznhz6cV_1UXdZX2iZ9w-EKQdbmI4W8ysv6Kw6d77lQRZFDN2LSo0qD4Exe1MyoTACjcFe0JvUa-9O9H9Qmyk4rKlbDlKSMdXvRc0dtHrjKtV7TgkWhts_JmEj1xZ1h9GB_kQaQ_waH6UaVxqE5UM75YkSgR9Tdcwl8eXX4Gx4vq8shZDE8y6I4I6LlB3n7YXsmI5Rj03YcYlH3nT0w0Bz-84h3gigzgB3T5ofXu7ccmaTbD1RUOum6A_g8lGJ3JRWpBJjNJ7CjicOnp9FdfG4-h5-4OufDhZjdyUjq4PQWVeXcqyNQu84XTVWrc6gJRx8oN2gjsaLq2Urm8DhtbD7e0GkR3WJawflfUNJYc_Xk_wxejdykK1-EnyK1e0G3oVyfGy86UEUc3H7fFJkPk7-1lw6zHv5OvBm0G2WGbK4g3bEnKXJc4E3Bm6UJnXkqS3CeekuUCZ7KETs7-qGKsOv7wBmvS8g3BvFv5GnXJ9KmdxSaP-X9hzPtdWq0k6BWQw1N0y4Hm-KBNi0O7GigZHgZK2ZsORm4T7HvYKbHgZKnU2oXvRjmDEYyw1RX9-FjW9K4WBmPXkJBX-DQWXCDZZc8FyBghqL9S8gjgP90-xG6_CKBAxQ',
+                'Authorization': 'YOUR_AUTHORIZATION_TOKEN_HERE'
             };
-            var timeZone = 'Europe/Budapest';
-            var workspace = 2;
-
-            // Calculate 'from' and 'to' dates for the last 7 days including today in 'Europe/Budapest' timezone
-            var now = new Date();
-            var sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
-
-            // Format 'from' and 'to' dates as 'YYYY-MM-DD HH:MM:SS'
-            var fromTime = formatDate(sevenDaysAgo);
-            var toTime = formatDate(now);
 
             // Display the API request on the website
             var apiRequestElement = document.getElementById('apiRequest');
