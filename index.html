@@ -42,8 +42,14 @@
         // Access the campaignName property from the response
         const campaignName = data.records[0].campaignName;
         
-        // Display the campaignName value in the console
-        console.log('Campaign Name:', campaignName);
+        // Check if campaignName contains 'Test'
+        if (campaignName.includes('Test')) {
+            // Redirect to a different URL
+            window.location.href = 'https://tribenetmedia.com/survey';
+        } else {
+            // Display the campaignName value in the console
+            console.log('Campaign Name:', campaignName);
+        }
     })
     .catch(error => {
         // Handle any errors that occurred during the fetch.
