@@ -6,6 +6,10 @@
     <title>Click ID Tracker</title>
 </head>
 <body>
+    <h1>Click ID Tracker</h1>
+    <p>Click ID: <span id="clickId"></span></p>
+    <p>Postback Result: <span id="postbackResult"></span></p>
+
     <script>
         // Function to parse URL parameters
         function getUrlParameter(name) {
@@ -18,6 +22,10 @@
         // Get the 'clickId' parameter from the URL
         var clickId = getUrlParameter('clickId');
 
+        // Display 'clickId' on the website
+        var clickIdElement = document.getElementById('clickId');
+        clickIdElement.textContent = clickId;
+
         // Check if 'clickId' parameter is provided
         if (clickId) {
             // Construct the postback URL with 'clickId'
@@ -29,16 +37,24 @@
             })
             .then(response => {
                 if (response.ok) {
-                    console.log(`Postback sent successfully for clickId: ${clickId}`);
+                    // Display a success message on the website
+                    var postbackResultElement = document.getElementById('postbackResult');
+                    postbackResultElement.textContent = 'Postback sent successfully';
                 } else {
-                    console.error(`Error sending postback for clickId: ${clickId}`);
+                    // Display an error message on the website
+                    var postbackResultElement = document.getElementById('postbackResult');
+                    postbackResultElement.textContent = 'Error sending postback';
                 }
             })
             .catch(error => {
-                console.error(`Error sending postback for clickId: ${clickId}`, error);
+                // Display an error message on the website
+                var postbackResultElement = document.getElementById('postbackResult');
+                postbackResultElement.textContent = 'Error sending postback: ' + error;
             });
         } else {
-            console.error('No "clickId" parameter found in the URL.');
+            // Display an error message on the website if 'clickId' is not found
+            var postbackResultElement = document.getElementById('postbackResult');
+            postbackResultElement.textContent = 'No "clickId" parameter found in the URL.';
         }
     </script>
 </body>
