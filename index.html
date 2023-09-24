@@ -23,6 +23,12 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
+        // Function to format a date in 'YYYY-MM-DD HH:MM:SS' with Europe/Budapest timezone
+        function formatDate(date) {
+            var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+            return date.toLocaleString('en-US', options).replace(/,/, '');
+        }
+
         // Get the 'clickId' parameter from the URL
         var clickId = getUrlParameter('clickId');
 
@@ -68,9 +74,9 @@
             var now = new Date();
             var sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
 
-            // Format 'from' and 'to' dates as 'YYYY-MM-DD HH:MM:SS' with Budapest timezone
-            var fromTime = sevenDaysAgo.toISOString().slice(0, 19).replace('T', ' ');
-            var toTime = now.toISOString().slice(0, 19).replace('T', ' ');
+            // Format 'from' and 'to' dates as 'YYYY-MM-DD HH:MM:SS' with Europe/Budapest timezone
+            var fromTime = formatDate(sevenDaysAgo);
+            var toTime = formatDate(now);
 
             // Create the API request payload
             var payload = {
