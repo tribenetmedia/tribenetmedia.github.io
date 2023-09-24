@@ -6,16 +6,6 @@
     <title>Click ID Tracker</title>
 </head>
 <body>
-    <h1>Click ID Tracker</h1>
-    <p>Click ID: <span id="clickId"></span></p>
-    <p>Postback Result: <span id="postbackResult"></span></p>
-    <p>API Request:</p>
-    <pre id="apiRequest"></pre>
-    <p>API Response (Before Parsing):</p>
-    <pre id="apiResponseBeforeParsing"></pre>
-    <p>API Response (After Parsing):</p>
-    <pre id="apiResponseAfterParsing"></pre>
-
     <script>
         // Function to parse URL parameters
         function getUrlParameter(name) {
@@ -25,23 +15,8 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to format a date in 'YYYY-MM-DD HH:MM:SS' without specifying the timezone
-        function formatDate(date) {
-            var year = date.getFullYear();
-            var month = String(date.getMonth() + 1).padStart(2, '0');
-            var day = String(date.getDate()).padStart(2, '0');
-            var hours = String(date.getHours()).padStart(2, '0');
-            var minutes = String(date.getMinutes()).padStart(2, '0');
-            var seconds = String(date.getSeconds()).padStart(2, '0');
-            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        }
-
         // Get the 'clickId' parameter from the URL
         var clickId = getUrlParameter('clickId');
-
-        // Display 'clickId' on the website
-        var clickIdElement = document.getElementById('clickId');
-        clickIdElement.textContent = clickId;
 
         // Check if 'clickId' parameter is provided
         if (clickId) {
@@ -54,70 +29,16 @@
             })
             .then(response => {
                 if (response.ok) {
-                    // Display a success message on the website
-                    var postbackResultElement = document.getElementById('postbackResult');
-                    postbackResultElement.textContent = 'Postback sent successfully';
+                    console.log(`Postback sent successfully for clickId: ${clickId}`);
                 } else {
-                    // Display an error message on the website
-                    var postbackResultElement = document.getElementById('postbackResult');
-                    postbackResultElement.textContent = 'Error sending postback';
+                    console.error(`Error sending postback for clickId: ${clickId}`);
                 }
             })
             .catch(error => {
-                // Display an error message on the website
-                var postbackResultElement = document.getElementById('postbackResult');
-                postbackResultElement.textContent = 'Error sending postback: ' + error;
-            });
-
-            // Request 'campaignName' from the API
-            var apiUrl = `https://ads-manager-api.skro.eu/v1/report/clicks?from=${fromTime}&to=${toTime}&timezone=${timeZone}&workspace=${workspace}&clickid=${clickId}`;
-            
-            // Define API request headers (replace with your actual authorization token)
-            var headers = {
-                'Authorization': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMyNDYsImFpZCI6MzIwNCwiZGlkIjoiIiwicmlkIjoxLCJhcHAiOjIsImlhdCI6MTY5NTU4MDg1OCwiZXhwIjoxNzI3MjAzMjU4fQ.noYpvdwPcm23YEa9PjJoj4hxJYauq7cpD4ILsyitiKNSvUs45Nn_8tGQ4p59CYXza5AH3FuJrHk4MbIq6kaToz3_9wj9wui-03dR-qZbIteuDQF8MI3hbHole3BvGIbAHdWoKC8GMS13SLH2FSy0RN6ismmXwzc0iQHFoPPOKOwLj_kPLJPyBz4oP763amuOFD4ylh3sq7HKNYDopJXIV1wUfjXQSRC7zsI7gPA7Vl_dn-WhUTbdsNN7djaZmvrumuyvxPAHEme8EQwKFMe4WEl-M6WdZYCXzIv0L_D_LZHW5dTkMKHtemDtU9U107TXmOG0QAPWs4D5Bhq_L_4ZMQ'
-            };
-
-            // Display the API request on the website
-            var apiRequestElement = document.getElementById('apiRequest');
-            apiRequestElement.textContent = apiUrl;
-
-            // Display the entire API response (before parsing) on the website
-            var apiResponseBeforeParsingElement = document.getElementById('apiResponseBeforeParsing');
-
-            // Fetch data from the external API using GET method
-            fetch(apiUrl, {
-                method: 'GET',
-                headers: headers
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Display the entire API response (before parsing) on the website
-                apiResponseBeforeParsingElement.textContent = JSON.stringify(data, null, 2);
-
-                // Check if 'campaignName' contains 'Test'
-                var campaignName = data.records[0].campaignName;
-                if (campaignName && campaignName.includes('Test')) {
-                    // Redirect to the specified URL
-                    window.location.href = 'https://tribenetmedia.com/survey';
-                } else {
-                    // Display a message on the website
-                    var postbackResultElement = document.getElementById('postbackResult');
-                    postbackResultElement.textContent = 'No redirect happened';
-                }
-
-                // Display the API response (after parsing) on the website
-                var apiResponseAfterParsingElement = document.getElementById('apiResponseAfterParsing');
-                apiResponseAfterParsingElement.textContent = JSON.stringify(data, null, 2);
-            })
-            .catch(error => {
-                // Display an error message on the website
-                var apiResponseElement = document.getElementById('apiResponseAfterParsing');
-                apiResponseElement.textContent = 'Error fetching data from the API: ' + error;
+                console.error(`Error sending postback for clickId: ${clickId}`, error);
             });
         } else {
-            // Display an error message on the website if 'clickId' is not found
-            var postbackResultElement = document.getElementById('postbackResult');
-            postbackResultElement.textContent = 'No "clickId" parameter found in the URL.';
+            console.error('No "clickId" parameter found in the URL.');
         }
     </script>
 </body>
