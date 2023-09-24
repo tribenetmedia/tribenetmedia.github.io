@@ -68,9 +68,9 @@
             var now = new Date();
             var sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
 
-            // Format 'from' and 'to' dates as ISO strings
-            var fromTime = sevenDaysAgo.toISOString();
-            var toTime = now.toISOString();
+            // Format 'from' and 'to' dates as 'YYYY-MM-DD HH:MM:SS'
+            var fromTime = sevenDaysAgo.toISOString().slice(0, 19).replace('T', ' ');
+            var toTime = now.toISOString().slice(0, 19).replace('T', ' ');
 
             // Create the API request payload
             var payload = {
