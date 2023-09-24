@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracker Page</title>
+    <title>Click ID Tracker</title>
 </head>
 <body>
     <script>
@@ -20,58 +20,22 @@
 
         // Check if 'clickId' parameter is provided
         if (clickId) {
-            // Send a postback to the specified URL
+            // Construct the postback URL with 'clickId'
             var postbackUrl = `https://insight.tribenetmedia.com/postback?clickId=${clickId}`;
+
+            // Send a GET request to the postback URL
             fetch(postbackUrl, {
                 method: 'GET'
             })
-            .then(response => response.text())
-            .then(data => {
-                // Calculate 'from' and 'to' dates for the last 7 days
-                var now = new Date();
-                var sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
-
-                // Format 'from' and 'to' dates as ISO strings
-                var fromTime = sevenDaysAgo.toISOString();
-                var toTime = now.toISOString();
-
-                // Rest of the code remains the same
-                var apiUrl = 'https://ads-manager-api.skro.eu/v1/report/clicks';
-                var headers = {
-                    'Authorization': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMyNDYsImFpZCI6MzIwNCwiZGlkIjoiIiwicmlkIjoxLCJhcHAiOjIsImlhdCI6MTY5NTU4MDg1OCwiZXhwIjoxNzI3MjAzMjU4fQ.noYpvdwPcm23YEa9PjJoj4hxJYauq7cpD4ILsyitiKNSvUs45Nn_8tGQ4p59CYXza5AH3FuJrHk4MbIq6kaToz3_9wj9wui-03dR-qZbIteuDQF8MI3hbHole3BvGIbAHdWoKC8GMS13SLH2FSy0RN6ismmXwzc0iQHFoPPOKOwLj_kPLJPyBz4oP763amuOFD4ylh3sq7HKNYDopJXIV1wUfjXQSRC7zsI7gPA7Vl_dn-WhUTbdsNN7djaZmvrumuyvxPAHEme8EQwKFMe4WEl-M6WdZYCXzIv0L_D_LZHW5dTkMKHtemDtU9U107TXmOG0QAPWs4D5Bhq_L_4ZMQ',
-                    'Content-Type': 'application/json'
-                };
-
-                var timeZone = 'GMT+1';
-                var workspace = 2;
-
-                var payload = {
-                    from: fromTime,
-                    to: toTime,
-                    timezone: timeZone,
-                    workspace: workspace,
-                    clickid: clickId
-                };
-
-                fetch(apiUrl, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(payload)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.campaignName.includes('Test')) {
-                        window.location.href = 'https://tribenetmedia.com/survey';
-                    } else {
-                        console.log(data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data from the API:', error);
-                });
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Postback sent successfully for clickId: ${clickId}`);
+                } else {
+                    console.error(`Error sending postback for clickId: ${clickId}`);
+                }
             })
             .catch(error => {
-                console.error('Error sending postback:', error);
+                console.error(`Error sending postback for clickId: ${clickId}`, error);
             });
         } else {
             console.error('No "clickId" parameter found in the URL.');
