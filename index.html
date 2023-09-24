@@ -1,45 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click ID Tracker</title>
+    <title>API Request</title>
 </head>
 <body>
-    <script>
-        // Function to parse URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
 
-        // Get the 'clickId' parameter from the URL
-        var clickId = getUrlParameter('clickId');
+<script>
+    // API endpoint URL
+    const apiUrl = 'https://ads-manager-api.skro.eu/v1/report/clicks?from=2023-09-17%2020%3A24%3A43.40&to=2023-09-24%2022%3A55%3A43.40&timezone=Europe%2FBudapest&workspace=2&clickId=ck89ss6hbsas738h1k4g';
 
-        // Check if 'clickId' parameter is provided
-        if (clickId) {
-            // Construct the postback URL with 'clickId'
-            var postbackUrl = `https://insight.tribenetmedia.com/postback?clickId=${clickId}`;
+    // Headers for the API request
+    const headers = {
+        'Accept': 'application/json',
+        'Authorization': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMyNDYsImFpZCI6MzIwNCwiZGlkIjoiIiwicmlkIjoxLCJhcHAiOjIsImlhdCI6MTY5NTU4MDg1OCwiZXhwIjoxNzI3MjAzMjU4fQ.noYpvdwPcm23YEa9PjJoj4hxJYauq7cpD4ILsyitiKNSvUs45Nn_8tGQ4p59CYXza5AH3FuJrHk4MbIq6kaToz3_9wj9wui-03dR-qZbIteuDQF8MI3hbHole3BvGIbAHdWoKC8GMS13SLH2FSy0RN6ismmXwzc0iQHFoPPOKOwLj_kPLJPyBz4oP763amuOFD4ylh3sq7HKNYDopJXIV1wUfjXQSRC7zsI7gPA7Vl_dn-WhUTbdsNN7djaZmvrumuyvxPAHEme8EQwKFMe4WEl-M6WdZYCXzIv0L_D_LZHW5dTkMKHtemDtU9U107TXmOG0QAPWs4D5Bhq_L_4ZMQ'
+    };
 
-            // Send a GET request to the postback URL
-            fetch(postbackUrl, {
-                method: 'GET'
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log(`Postback sent successfully for clickId: ${clickId}`);
-                } else {
-                    console.error(`Error sending postback for clickId: ${clickId}`);
-                }
-            })
-            .catch(error => {
-                console.error(`Error sending postback for clickId: ${clickId}`, error);
-            });
-        } else {
-            console.error('No "clickId" parameter found in the URL.');
-        }
-    </script>
+    // Make the API request
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: headers
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the API response data here
+        console.log(data);
+    })
+    .catch(error => {
+        // Handle any errors that occurred during the fetch.
+        console.error('Error:', error);
+    });
+</script>
+
 </body>
 </html>
