@@ -1,47 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Access Vercel Function</title>
+    <title>API Request</title>
 </head>
 <body>
-    <div id="response-container">
-        <!-- The response will be displayed here -->
-    </div>
 
-    <script>
-        // Define the URL of your Vercel function
-        const functionUrl = “https://tribenetmedia-github-io-tribenetmedia-tribenetmedias-projects.vercel.app";
+<script>
+    // Calculate the start and end dates for the last 7 days
+    const endDate = new Date(); // Current date and time
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 7); // Subtract 7 days
 
-        // Function to make a GET request
-        const fetchData = async () => {
-            try {
-                const response = await fetch(functionUrl);
+    // Format dates in the required format (YYYY-MM-DD HH:mm:ss.SS)
+    const formatDate = date => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+    };
 
-                if (response.ok) {
-                    const data = await response.json();
-                    displayResponse(data);
-                } else {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-            } catch (error) {
-                console.error("Fetch Error:", error);
-                displayResponse({ error: "An error occurred while fetching data." });
-            }
-        };
+    // API endpoint URL with dynamically calculated from and to dates
+    const apiUrl = `https://ads-manager-api.skro.eu/v1/report/clicks?from=${formatDate(startDate)}&to=${formatDate(endDate)}&timezone=Europe%2FBudapest&workspace=2&clickId=ck89ss6hbsas738h1k4g`;
 
-        // Function to display the response
-        const displayResponse = (data) => {
-            const responseContainer = document.getElementById("response-container");
+    // Headers for the API request
+    const headers = {
+        'Accept': 'application/json',
+        'Authorization': process.env.SKRO_KEY // Use the SKRO_KEY environment variable
+    };
 
-            if (data.error) {
-                responseContainer.textContent = `Error: ${data.error}`;
-            } else {
-                responseContainer.textContent = JSON.stringify(data, null, 2);
-            }
-        };
+    // Make the API request
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: headers
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Access the campaignName property from the response
+        const campaignName = data.records[0].campaignName;
+        
+        // Check if campaignName contains 'Test'
+        if (campaignName.includes('Test')) {
+            // Redirect to a different URL
+            window.location.href = 'https://tribenetmedia.com/survey';
+        } else {
+            // Display the campaignName value in the console
+            console.log('Campaign Name:', campaignName);
+        }
+    })
+    .catch(error => {
+        // Handle any errors that occurred during the fetch.
+        console.error('Error:', error);
+    });
+</script>
 
-        // Call the fetchData function when the page loads
-        fetchData();
-    </script>
 </body>
 </html>
+
