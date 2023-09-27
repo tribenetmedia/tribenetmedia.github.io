@@ -1,44 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Survey</title>
+    <title>Survey About Surveys</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .question {
+            display: none;
+        }
+        .button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Feedback Survey</h1>
-    <form id="surveyForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
+    <h1>Survey About Surveys</h1>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+    <form id="questionnaireForm">
+        <div class="question">
+            <p>1. What is your age?</p>
+            <input type="text" name="age" required>
+        </div>
 
-        <label for="rating">Rate your experience (1-5):</label>
-        <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
+        <div class="question">
+            <p>2. What is your gender?</p>
+            <input type="text" name="gender" required>
+        </div>
 
-        <label for="comments">Comments:</label><br>
-        <textarea id="comments" name="comments" rows="4" cols="50"></textarea><br><br>
+        <!-- Repeat this pattern for each question -->
+        <!-- Example below for Question 3 -->
+        <div class="question">
+            <p>3. Which statement best describes your opinion about market research surveys?</p>
+            <label><input type="radio" name="opinion" value="a" required> Surveys are useful ways of gathering information.</label><br>
+            <label><input type="radio" name="opinion" value="b" required> Most surveys are a waste of people's time.</label><br>
+            <label><input type="radio" name="opinion" value="c" required> Surveys stop people doing more important things.</label><br>
+            <label><input type="radio" name="opinion" value="d" required> Surveys are boring for the persons who have to answer the question.</label><br>
+            <label><input type="radio" name="opinion" value="e" required> I do not like participating in surveys.</label><br>
+            <label><input type="radio" name="opinion" value="f" required> Surveys are an invasion of privacy.</label><br>
+            <label><input type="radio" name="opinion" value="g" required> I participate only for rewards.</label><br>
+        </div>
 
-        <input type="submit" value="Submit">
+        <!-- Continue with more questions -->
+
+        <div class="question">
+            <p>19. If you had a magic wand and could change anything in this survey, what would it be? (Optional)</p>
+            <textarea name="magicWand"></textarea>
+        </div>
+
+        <button type="button" class="button" id="prevBtn" onclick="previousQuestion()">Previous</button>
+        <button type="button" class="button" id="nextBtn" onclick="nextQuestion()">Next</button>
+        <button type="submit" class="button" id="submitBtn" style="display:none;">Submit</button>
     </form>
 
-    <div id="thankYou" style="display:none;">
-        <h2>Thank you for your feedback!</h2>
-        <p>We appreciate your input.</p>
-    </div>
-
     <script>
-        // Handle form submission
-        document.getElementById("surveyForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the form from actually submitting
+        let currentQuestion = 0;
+        const questions = document.querySelectorAll(".question");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const submitBtn = document.getElementById("submitBtn");
 
-            // Get form data
-            const formData = new FormData(this);
+        function showQuestion(index) {
+            questions[currentQuestion].style.display = "none";
+            questions[index].style.display = "block";
+            currentQuestion = index;
 
-            // You can send the form data to a server for processing here if needed
-            // For this example, we'll just show a thank you message
-            document.getElementById("surveyForm").style.display = "none";
-            document.getElementById("thankYou").style.display = "block";
-        });
+            prevBtn.style.display = currentQuestion === 0 ? "none" : "block";
+            nextBtn.innerHTML = currentQuestion === questions.length - 1 ? "Submit" : "Next";
+        }
+
+        function previousQuestion() {
+            showQuestion(currentQuestion - 1);
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                document.getElementById("questionnaireForm").submit();
+            }
+        }
+
+        showQuestion(0);
     </script>
 </body>
 </html>
