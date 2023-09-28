@@ -3,85 +3,79 @@
 <head>
     <title>Survey About Surveys</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
         .question {
             display: none;
-        }
-        .button {
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <h1>Survey About Surveys</h1>
-
-    <form id="questionnaireForm">
-        <div class="question">
-            <p>1. What is your age?</p>
-            <input type="text" name="age" required>
+    <form id="surveyForm">
+        <div class="question" id="q1">
+            <label for="age">1. What is your age?</label>
+            <input type="date" id="age" required><br><br>
+            <button onclick="nextQuestion('q2')">Next</button>
         </div>
 
-        <div class="question">
-            <p>2. What is your gender?</p>
-            <input type="text" name="gender" required>
+        <div class="question" id="q2">
+            <label>2. What is your gender?</label><br>
+            <input type="radio" name="gender" value="male" required> Male<br>
+            <input type="radio" name="gender" value="female" required> Female<br>
+            <input type="radio" name="gender" value="other" required> Other<br><br>
+            <button onclick="nextQuestion('q3')">Next</button>
         </div>
 
-        <!-- Repeat this pattern for each question -->
-        <!-- Example below for Question 3 -->
-        <div class="question">
-            <p>3. Which statement best describes your opinion about market research surveys?</p>
-            <label><input type="radio" name="opinion" value="a" required> Surveys are useful ways of gathering information.</label><br>
-            <label><input type="radio" name="opinion" value="b" required> Most surveys are a waste of people's time.</label><br>
-            <label><input type="radio" name="opinion" value="c" required> Surveys stop people doing more important things.</label><br>
-            <label><input type="radio" name="opinion" value="d" required> Surveys are boring for the persons who have to answer the question.</label><br>
-            <label><input type="radio" name="opinion" value="e" required> I do not like participating in surveys.</label><br>
-            <label><input type="radio" name="opinion" value="f" required> Surveys are an invasion of privacy.</label><br>
-            <label><input type="radio" name="opinion" value="g" required> I participate only for rewards.</label><br>
+        <div class="question" id="q3">
+            <label>3. Which statement best describes your opinion about market research surveys?</label><br>
+            <input type="checkbox" name="opinion" value="a"> Surveys are useful ways of gathering information.<br>
+            <input type="checkbox" name="opinion" value="b"> Most surveys are a waste of people's time.<br>
+            <input type="checkbox" name="opinion" value="c"> Surveys stop people doing more important things.<br>
+            <input type="checkbox" name="opinion" value="d"> Surveys are boring for the persons who have to answer the question.<br>
+            <input type="checkbox" name="opinion" value="e"> I do not like participating in surveys.<br>
+            <input type="checkbox" name="opinion" value="f"> Surveys are an invasion of privacy.<br>
+            <input type="checkbox" name="opinion" value="g"> I participate only for rewards<br><br>
+            <button onclick="nextQuestion('q4')">Next</button>
         </div>
 
-        <!-- Continue with more questions -->
+        <!-- Add more questions in the same format -->
 
-        <div class="question">
-            <p>19. If you had a magic wand and could change anything in this survey, what would it be? (Optional)</p>
-            <textarea name="magicWand"></textarea>
+        <div class="question" id="q19">
+            <label>19. If you had a magic wand and could change anything in this survey, what would it be? (Optional)</label><br>
+            <textarea id="magicWand" rows="4" cols="50"></textarea><br><br>
+            <button onclick="submitForm()">Submit</button>
         </div>
-
-        <button type="button" class="button" id="prevBtn" onclick="previousQuestion()">Previous</button>
-        <button type="button" class="button" id="nextBtn" onclick="nextQuestion()">Next</button>
-        <button type="submit" class="button" id="submitBtn" style="display:none;">Submit</button>
     </form>
 
     <script>
-        let currentQuestion = 0;
-        const questions = document.querySelectorAll(".question");
-        const prevBtn = document.getElementById("prevBtn");
-        const nextBtn = document.getElementById("nextBtn");
-        const submitBtn = document.getElementById("submitBtn");
+        let currentQuestion = 1;
 
-        function showQuestion(index) {
-            questions[currentQuestion].style.display = "none";
-            questions[index].style.display = "block";
-            currentQuestion = index;
+        function nextQuestion(questionId) {
+            const current = document.getElementById(`q${currentQuestion}`);
+            const next = document.getElementById(questionId);
 
-            prevBtn.style.display = currentQuestion === 0 ? "none" : "block";
-            nextBtn.innerHTML = currentQuestion === questions.length - 1 ? "Submit" : "Next";
+            // Validate current question
+            if (current.querySelector('input[required]') && !current.querySelector('input[required]').checkValidity()) {
+                alert('Please answer the question before proceeding.');
+                return;
+            }
+
+            current.style.display = 'none';
+            next.style.display = 'block';
+
+            currentQuestion++;
         }
 
-        function previousQuestion() {
-            showQuestion(currentQuestion - 1);
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                showQuestion(currentQuestion + 1);
+        function submitForm() {
+            const form = document.getElementById('surveyForm');
+            if (form.checkValidity()) {
+                // Form is valid, you can submit it to a server or take other actions here
+                alert('Thank you for completing the survey!');
+                // You can also redirect the user to another page after submission
+                // window.location.href = 'thankyou.html';
             } else {
-                document.getElementById("questionnaireForm").submit();
+                alert('Please answer all questions before submitting.');
             }
         }
-
-        showQuestion(0);
     </script>
 </body>
 </html>
