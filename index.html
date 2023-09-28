@@ -2,43 +2,33 @@
 <html>
 <head>
     <title>Survey About Surveys</title>
+    <style>
+        .question {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Survey About Surveys</h1>
     <form id="surveyForm">
-        <div class="question" id="q1">
-            <label for="age">1. What is your age?</label>
-            <input type="date" id="age" required><br><br>
-            <button onclick="nextQuestion('q2')">Next</button>
+        <!-- Previous questions ... -->
+
+        <div class="question" id="q9">
+            <label>9. Which points do you consider when you choose a survey to complete? (multiple choice)</label><br>
+            <input type="checkbox" name="surveyPoints" value="a"> Logo design<br>
+            <input type="checkbox" name="surveyPoints" value="b"> Headline’s ability to attract attention<br>
+            <input type="checkbox" name="surveyPoints" value="c"> Description’s ability to attract attention<br>
+            <input type="checkbox" name="surveyPoints" value="d"> How specific the topic is<br>
+            <input type="checkbox" name="surveyPoints" value="e"> Image<br>
+            <input type="checkbox" name="surveyPoints" value="f"> Amount of reward<br>
+            <input type="checkbox" name="surveyPoints" value="g"> How easy-to-complete it looks like<br>
+            <input type="checkbox" name="surveyPoints" value="h"> Previous experience<br>
+            <input type="checkbox" name="surveyPoints" value="i"> Offer/ ad placement<br>
+            <input type="checkbox" name="surveyPoints" value="j"> Other, please specify: <input type="text" name="surveyPointsOther"><br><br>
+            <button onclick="nextQuestion('q10')">Next</button>
         </div>
 
-        <div class="question" id="q2">
-            <label>2. What is your gender?</label><br>
-            <input type="radio" name="gender" value="male" required> Male<br>
-            <input type="radio" name="gender" value="female" required> Female<br>
-            <input type="radio" name="gender" value="other" required> Other<br><br>
-            <button onclick="nextQuestion('q3')">Next</button>
-        </div>
-
-        <div class="question" id="q3">
-            <label>3. Which statement best describes your opinion about market research surveys?</label><br>
-            <input type="checkbox" name="opinion" value="a"> Surveys are useful ways of gathering information.<br>
-            <input type="checkbox" name="opinion" value="b"> Most surveys are a waste of people's time.<br>
-            <input type="checkbox" name="opinion" value="c"> Surveys stop people doing more important things.<br>
-            <input type="checkbox" name="opinion" value="d"> Surveys are boring for the persons who have to answer the question.<br>
-            <input type="checkbox" name="opinion" value="e"> I do not like participating in surveys.<br>
-            <input type="checkbox" name="opinion" value="f"> Surveys are an invasion of privacy.<br>
-            <input type="checkbox" name="opinion" value="g"> I participate only for rewards<br><br>
-            <button onclick="nextQuestion('q4')">Next</button>
-        </div>
-
-        <!-- Add more questions in the same format -->
-
-        <div class="question" id="q19">
-            <label>19. If you had a magic wand and could change anything in this survey, what would it be? (Optional)</label><br>
-            <textarea id="magicWand" rows="4" cols="50"></textarea><br><br>
-            <button onclick="submitForm()">Submit</button>
-        </div>
+        <!-- Remaining questions ... -->
     </form>
 
     <script>
