@@ -15,7 +15,7 @@
 
         <!-- Question 2 -->
         <div class="question" id="question2" style="display: none;">
-            <label for="q2">Q2. What is your gender? (male / female / Other)</label>
+            <label for="q2">Q2. What is your gender?</label>
             <select id="q2" name="q2" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -26,7 +26,7 @@
 
         <!-- Question 3 -->
         <div class="question" id="question3" style="display: none;">
-            <label for="q3">Q3. Which statement best describes your opinion about market research surveys? (Choose one from the options)</label>
+            <label for="q3">Q3. Which statement best describes your opinion about market research surveys?</label>
             <ul>
                 <li><input type="radio" name="q3" value="a" required> Surveys are useful ways of gathering information.</li>
                 <li><input type="radio" name="q3" value="b" required> Most surveys are a waste of people's time.</li>
@@ -41,7 +41,7 @@
 
         <!-- Question 4 -->
         <div class="question" id="question4" style="display: none;">
-            <label>Q4. What convinced you to complete this survey? (multiple choice)</label>
+            <label>Q4. What convinced you to complete this survey?</label>
             <ul>
                 <li><input type="checkbox" name="q4[]" value="a"> The promised reward</li>
                 <li><input type="checkbox" name="q4[]" value="b"> It looked interesting</li>
@@ -56,21 +56,21 @@
 
         <!-- Question 5 -->
         <div class="question" id="question5" style="display: none;">
-            <label for="q5">Q5. What’s the one thing that nearly stopped you from completing this survey? (Open ended)</label>
+            <label for="q5">Q5. What is the one thing that nearly stopped you from completing this survey?</label>
             <textarea id="q5" name="q5" rows="4" cols="50" required></textarea>
             <button type="button" id="nextButton5" onclick="nextQuestion(5)">Next</button>
         </div>
 
         <!-- Question 6 -->
         <div class="question" id="question6" style="display: none;">
-            <label for="q6">Q6. What other information would you need from a survey to be more engaging? (Open ended)</label>
+            <label for="q6">Q6. What other information would you need from a survey to be more engaging?</label>
             <textarea id="q6" name="q6" rows="4" cols="50" required></textarea>
             <button type="button" id="nextButton6" onclick="nextQuestion(6)">Next</button>
         </div>
 
         <!-- Question 7 -->
         <div class="question" id="question7" style="display: none;">
-            <label>Q7. Which points do you consider when you choose a survey to complete? (multiple choice)</label>
+            <label>Q7. Which points do you consider when you choose a survey to complete?</label>
             <ul>
                 <li><input type="checkbox" name="q7[]" value="a"> Logo design</li>
                 <li><input type="checkbox" name="q7[]" value="b"> Headline’s ability to attract attention</li>
@@ -134,25 +134,19 @@
         }
 
         function submitForm() {
-    if (currentQuestion === totalQuestions) {
-        const currentQuestionElement = document.querySelector(`#question${currentQuestion}`);
-        if (currentQuestionElement.querySelector('input[required]:invalid, textarea[required]:invalid, select[required]:invalid')) {
-            return; // Don't submit if the last question is not answered.
-        }
-        
-        // Get the clickId parameter from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const clickId = urlParams.get("clickId");
+            if (currentQuestion === totalQuestions) {
+                const currentQuestionElement = document.querySelector(`#question${currentQuestion}`);
+                if (currentQuestionElement.querySelector('input[required]:invalid, textarea[required]:invalid, select[required]:invalid')) {
+                    return; // Don't submit if the last question is not answered.
+                }
 
-        // Redirect to the specified URL with the clickId parameter
-        const redirectURL = `https://success.tribenetmedia.com/?clickId=${clickId}`;
-        window.location.href = redirectURL;
-    }
-}
-                // You can add code here to handle form submission (e.g., send data to a server).
-                // For now, we'll just show the thank you page.
-                document.getElementById("surveyForm").style.display = "none";
-                document.getElementById("thankYou").style.display = "block";
+                // Get the clickId parameter from the URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const clickId = urlParams.get("clickId");
+
+                // Redirect to the specified URL with the clickId parameter
+                const redirectURL = `https://success.tribenetmedia.com/?clickId=${clickId}`;
+                window.location.href = redirectURL;
             }
         }
 
