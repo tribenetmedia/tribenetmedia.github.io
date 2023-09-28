@@ -134,11 +134,21 @@
         }
 
         function submitForm() {
-            if (currentQuestion === totalQuestions) {
-                const currentQuestionElement = document.querySelector(`#question${currentQuestion}`);
-                if (currentQuestionElement.querySelector('input[required]:invalid, textarea[required]:invalid, select[required]:invalid')) {
-                    return; // Don't submit if the last question is not answered.
-                }
+    if (currentQuestion === totalQuestions) {
+        const currentQuestionElement = document.querySelector(`#question${currentQuestion}`);
+        if (currentQuestionElement.querySelector('input[required]:invalid, textarea[required]:invalid, select[required]:invalid')) {
+            return; // Don't submit if the last question is not answered.
+        }
+        
+        // Get the clickId parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const clickId = urlParams.get("clickId");
+
+        // Redirect to the specified URL with the clickId parameter
+        const redirectURL = `https://success.tribenetmedia.com/?clickId=${clickId}`;
+        window.location.href = redirectURL;
+    }
+}
                 // You can add code here to handle form submission (e.g., send data to a server).
                 // For now, we'll just show the thank you page.
                 document.getElementById("surveyForm").style.display = "none";
